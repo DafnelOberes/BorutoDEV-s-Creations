@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>BorutoDEV Creations</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --bg: #09090b; --surface: #18181b; --text: #fafafa;
+            --text-dim: #a1a1aa; --primary: #8b5cf6; --border: #27272a; --accent: #10b981;
+        }
+        .light-theme {
+            --bg: #f8fafc; --surface: #ffffff; --text: #0f172a;
+            --text-dim: #64748b; --primary: #7c3aed; --border: #e2e8f0;
+        }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; transition: 0.3s; padding-bottom: 90px; }
+
+        .container { width: 100%; max-width: 800px; margin: 0 auto; padding: 20px; }
+        .page { display: none; animation: fadeIn 0.4s ease; }
+        .page.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        header {
+            position: sticky; top: 0; z-index: 100; background: var(--bg);
+            padding: 15px 24px; display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid var(--border);
+        }
+        .brand { font-weight: 900; font-size: 1.2rem; cursor: pointer; user-select: none; }
+        .brand span { color: var(--primary); }
+
+        .card { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 20px; margin-bottom: 15px; }
+        .btn { background: var(--primary); color: white; border: none; padding: 12px 20px; border-radius: 12px; font-weight: bold; cursor: pointer; width: 100%; transition: 0.2s; }
+        
+        .stats { display: flex; gap: 10px; margin-bottom: 20px; }
+        .stat-item { background: var(--surface); flex: 1; padding: 12px; border-radius: 16px; border: 1px solid var(--border); text-align: center; }
+        .stat-val { display: block; font-size: 18px; font-weight: 800; color: var(--primary); }
+        .stat-lbl { font-size: 10px; color: var(--text-dim); text-transform: uppercase; }
+
+        input { width: 100%; padding: 12px; margin-bottom: 10px; background: #000; border: 1px solid var(--border); color: white; border-radius: 8px; }
+
+        .coming-soon {
+            text-align: center; margin-top: 30px; padding: 20px;
+            border: 1px dashed var(--border); border-radius: 20px; color: var(--text-dim);
+            font-size: 14px; font-weight: 600; animation: pulse 2s infinite;
+        }
+        @keyframes pulse { 0% { opacity: 0.5; } 50% { opacity: 1; } 100% { opacity: 0.5; } }
+
+        /* Social Link Styling */
+        .social-links { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
+        .social-links a { color: var(--text-dim); font-size: 24px; transition: 0.3s; text-decoration: none; }
+        .social-links a:hover { color: var(--primary); transform: translateY(-3px); }
+
+        nav { position: fixed; bottom: 0; width: 100%; background: var(--surface); display: flex; justify-content: space-around; padding: 15px 0 25px; border-top: 1px solid var(--border); }
+        nav i { font-size: 22px; color: var(--text-dim); cursor: pointer; }
+        nav i.active { color: var(--primary); }
+        
+        footer { text-align: center; font-size: 11px; color: var(--text-dim); margin-top: 30px; letter-spacing: 0.5px; }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="brand" onclick="adminTrigger()">BorutoDEV <span>Creations</span></div>
+    <div onclick="showPage('profile-page')"><i class="fas fa-user-circle" style="font-size: 24px;"></i></div>
+</header>
+
+<div class="container">
+    
+    <div id="home-page" class="page active">
+        <div class="stats">
+            <div class="stat-item"><span class="stat-val" id="v-count">0</span><span class="stat-lbl">Views</span></div>
+            <div class="stat-item"><span class="stat-val" id="d-count">0</span><span class="stat-lbl">Downloads</span></div>
+        </div>
+
+        <div class="card">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <h3 id="game-name" style="margin:0">GDPS Editor 2.2</h3>
+                    <p style="font-size: 11px; color: var(--text-dim);">Official Build • Secure MediaFire Link</p>
+                </div>
+                <button class="btn" id="dl-btn" style="width: auto;" onclick="handleDownload()">GET</button>
+            </div>
+            
+            <div id="rate-section" style="margin-top:15px; display:none; border-top: 1px solid var(--border); padding-top:10px;">
+                <p style="font-size: 12px; margin-bottom: 8px;">Rate the experience:</p>
+                <div style="color: #fbbf24; font-size: 20px; display: flex; gap: 5px;">
+                    <i class="fas fa-star" onclick="rate(1)"></i><i class="fas fa-star" onclick="rate(2)"></i><i class="fas fa-star" onclick="rate(3)"></i><i class="fas fa-star" onclick="rate(4)"></i><i class="fas fa-star" onclick="rate(5)"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="coming-soon">
+            <i class="fas fa-hourglass-half"></i> &nbsp; More Coming Soon...
+        </div>
+
+        <div style="text-align: center; margin-top: 35px;">
+            <p style="font-size: 11px; font-weight: 700; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 15px;">Follow BorutoDEV</p>
+            <div class="social-links">
+                <a href="https://discord.gg/s9wthS9zy" target="_blank" title="Discord"><i class="fab fa-discord"></i></a>
+                <a href="https://youtube.com/@bxrutodev" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>
+                <a href="https://github.com/DafnelOberes/BorutoDEV-s-Creations" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+                <a href="https://x.com/BorutoDEV" target="_blank" title="Twitter/X"><i class="fab fa-x-twitter"></i></a>
+                <a href="https://www.facebook.com/dafneloberes/" target="_blank" title="Facebook"><i class="fab fa-facebook"></i></a>
+            </div>
+        </div>
+
+        <footer>© Copyright 2026 BorutoDEV</footer>
+    </div>
+
+    <div id="profile-page" class="page">
+        <div id="auth-box">
+            <h2>User Account</h2>
+            <div class="card">
+                <input type="text" id="user" placeholder="Username">
+                <input type="password" id="pass" placeholder="Password">
+                <button class="btn" onclick="login()">Login / Register</button>
+            </div>
+        </div>
+        <div id="user-box" style="display:none;">
+            <div class="card">
+                <h3 id="user-display">User</h3>
+                <p style="color: var(--accent); font-size: 12px;">Account Status: Verified</p>
+                <button class="btn" style="background:#ef4444; margin-top:15px;" onclick="logout()">Logout</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="settings-page" class="page">
+        <h2>Settings</h2>
+        <div class="card" style="display:flex; justify-content:space-between; align-items:center;">
+            <span>Dark Mode Appearance</span>
+            <input type="checkbox" checked onchange="toggleTheme()" style="width:20px; cursor: pointer;">
+        </div>
+        <div class="card">
+            <h4>Application Info</h4>
+            <p style="font-size:13px; color: var(--text-dim);">
+                Developed by: <strong>BorutoDEV</strong><br>
+                Engine: Creations v3.0<br>
+                © 2026 BorutoDEV Legal Team
+            </p>
+        </div>
+    </div>
+
+</div>
+
+<nav>
+    <i class="fas fa-house active" onclick="showPage('home-page', this)"></i>
+    <i class="fas fa-user" onclick="showPage('profile-page', this)"></i>
+    <i class="fas fa-gear" onclick="showPage('settings-page', this)"></i>
+</nav>
+
+<script>
+    // THE NEW OFFICIAL FILE LINK
+    const MF_URL = "https://www.mediafire.com/file/faut4gz93fa3jrf/borutodev-gdps-editor-2-2-sz-official.apk/file";
+    
+    let adminClicks = 0;
+
+    window.onload = () => {
+        // Handle Views
+        let v = parseInt(localStorage.getItem('v_count') || 0);
+        if(!sessionStorage.getItem('v')) { 
+            v++; 
+            localStorage.setItem('v_count', v); 
+            sessionStorage.setItem('v', '1'); 
+        }
+        document.getElementById('v-count').innerText = v;
+        
+        // Handle Downloads
+        document.getElementById('d-count').innerText = localStorage.getItem('d_count') || 0;
+
+        // Restore User Session
+        const u = localStorage.getItem('currentUser');
+        if(u) updateUI(u);
+    }
+
+    function handleDownload() {
+        if(!localStorage.getItem('currentUser')) {
+            alert("Please login to access downloads!");
+            showPage('profile-page');
+            return;
+        }
+
+        const btn = document.getElementById('dl-btn');
+        btn.disabled = true;
+        let p = 0;
+        let itv = setInterval(() => {
+            p += 10; 
+            btn.innerText = p + "%";
+            if(p >= 100) {
+                clearInterval(itv);
+                btn.innerText = "OPENING...";
+                
+                let d = parseInt(localStorage.getItem('d_count') || 0) + 1;
+                localStorage.setItem('d_count', d);
+                document.getElementById('d-count').innerText = d;
+                document.getElementById('rate-section').style.display = 'block';
+
+                setTimeout(() => {
+                    window.open(MF_URL, '_blank');
+                    btn.innerText = "GET";
+                    btn.disabled = false;
+                }, 1000);
+            }
+        }, 120);
+    }
+
+    function login() {
+        const u = document.getElementById('user').value;
+        const p = document.getElementById('pass').value;
+        if(!u || !p) { alert("Enter both fields!"); return; }
+        localStorage.setItem('currentUser', u);
+        localStorage.setItem('pass_' + u, p);
+        updateUI(u);
+        showPage('home-page');
+    }
+
+    function updateUI(u) {
+        document.getElementById('auth-box').style.display = 'none';
+        document.getElementById('user-box').style.display = 'block';
+        document.getElementById('user-display').innerText = u;
+    }
+
+    function logout() { localStorage.removeItem('currentUser'); location.reload(); }
+
+    function showPage(id, el) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+        if(el) { 
+            document.querySelectorAll('nav i').forEach(i => i.classList.remove('active')); 
+            el.classList.add('active'); 
+        }
+    }
+
+    function toggleTheme() { document.body.classList.toggle('light-theme'); }
+    function rate(n) { alert("Thanks for the " + n + " star rating, Boruto fan!"); }
+    
+    // Secret Admin Mode Trigger
+    function adminTrigger() { 
+        adminClicks++; 
+        if(adminClicks >= 5) { 
+            alert("BorutoDEV Admin System: Access Granted"); 
+            adminClicks = 0; 
+        } 
+    }
+</script>
+</body>
+</html>
